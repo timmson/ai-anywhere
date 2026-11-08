@@ -69,6 +69,8 @@ export interface Question {
   title: string;
   /** Короткая подсказка под заголовком (не раскрывает баллы). */
   hint?: string;
+  /** SVG path для иконки вопроса (Material Symbols outline). */
+  icon?: string;
   options: AnswerOption[];
 }
 

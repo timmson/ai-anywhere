@@ -55,12 +55,22 @@ export default function Quiz({ onSubmit, onExit }: Props) {
       </div>
 
       <main className="quiz-body" key={question.id}>
-        <h2 className="question-title">{question.title}</h2>
+        <div className="question-head">
+          {question.icon && (
+            <span className="question-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d={question.icon} />
+              </svg>
+            </span>
+          )}
+          <h2 className="question-title">{question.title}</h2>
+        </div>
         {question.hint && <p className="question-hint">{question.hint}</p>}
 
         <div className="options" role="radiogroup" aria-label={question.title}>
-          {question.options.map((option) => {
+          {question.options.map((option, i) => {
             const active = selected === option.id;
+            const letter = String.fromCharCode(1040 + i); // А, Б, В, ...
             return (
               <label key={option.id} className={`option${active ? ' option-active' : ''}`}>
                 <input
@@ -70,7 +80,7 @@ export default function Quiz({ onSubmit, onExit }: Props) {
                   checked={active}
                   onChange={() => select(option.id)}
                 />
-                <span className="option-mark" aria-hidden="true" />
+                <span className="option-letter">{letter}</span>
                 <span className="option-label">{option.label}</span>
               </label>
             );
