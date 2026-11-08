@@ -1,6 +1,7 @@
 import type { DiagnosisResult } from '../diagnosis/types';
 import Gauge from './Gauge';
 import { COMPLEXITY_LABEL, COMPLEXITY_NOTE, RISK_LABEL } from '../diagnosis/rules';
+import { useCallback } from 'react';
 
 interface Props {
   result: DiagnosisResult;
@@ -9,6 +10,10 @@ interface Props {
 
 export default function Results({ result, onRestart }: Props) {
   const { recommendation } = result;
+
+  const handlePrint = useCallback(() => {
+    window.print();
+  }, []);
 
   return (
     <main className="results">
@@ -133,8 +138,14 @@ export default function Results({ result, onRestart }: Props) {
       </article>
 
       <div className="results-actions">
-        <button type="button" className="btn btn-primary" onClick={onRestart}>
-          Пройти диагностику заново
+        <button type="button" className="btn btn-primary" onClick={handlePrint}>
+          <svg viewBox="0 0 24 24" style={{ width: 18, height: 18, fill: 'currentColor', marginRight: 4 }} focusable="false">
+            <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+          </svg>
+          Скачать отчёт PDF
+        </button>
+        <button type="button" className="btn btn-ghost" onClick={onRestart} style={{ marginLeft: '0.5rem' }}>
+          Пройти заново
         </button>
       </div>
     </main>
